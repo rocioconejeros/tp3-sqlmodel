@@ -76,6 +76,22 @@ def eliminar_persona(persona_id: int):
         session.commit()
         print(f"\nPersona {persona_id} eliminada")
 
+def eliminar_oficina(nombre_oficina: str):
+    with Session(engine) as session:
+        oficina = session.exec(
+            select(Oficina).where(Oficina.nombre == nombre_oficina)
+        ).one()
+
+        ids_personas = [p.id for p in oficina.personas]
+        print(f"\nEliminando '{oficina.nombre}' con {len(ids_personas)} persona(s)...")
+
+        session.delete(oficina)
+        session.commit()
+
+        for persona_id in ids_personas:
+            persona = session.get(Persona, persona_id)
+            print(f" -{persona.nombre}: oficina_id = {persona.oficina_id}")
+
 
 if __name__ == "__main__":
     create_db_and_tables()
@@ -87,3 +103,4 @@ if __name__ == "__main__":
     reasignar_persona(1, "Sucursal Norte")
     listar_personas_de_oficina("Sucursal Norte")
     eliminar_persona(2)
+    eliminar_oficina("Sucursal Norte")
