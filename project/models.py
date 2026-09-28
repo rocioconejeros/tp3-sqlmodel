@@ -1,20 +1,23 @@
-from typing import Optional, List
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import Field, Relationship, SQLModel
 
 
 class Oficina(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     nombre: str
     direccion: str
 
-    personas: List["Persona"] = Relationship(back_populates="oficina")
+    # Lado de la relación: lista de personas de esta oficina
+    personas: list["Persona"] = Relationship(back_populates="oficina")
 
 
 class Persona(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     nombre: str
-    edad: Optional[int] = None
-    puesto: Optional[str] = None
+    edad: int | None = None
+    puesto: str | None = None
 
-    oficina_id: Optional[int] = Field(default=None, foreign_key="oficina.id")
-    oficina: Optional[Oficina] = Relationship(back_populates="personas")
+    # Clave foránea. Es opcional (None) para que una persona pueda quedar sin oficina, por ejemplo si se borra la oficina a la que pertenecía.
+    oficina_id: int | None = Field(default=None, foreign_key="oficina.id")
+
+    # Lado "muchos" de la relación: la oficina de esta persona
+    oficina: Oficina | None = Relationship(back_populates="personas")
