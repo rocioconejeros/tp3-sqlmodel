@@ -14,16 +14,17 @@ Al ejecutar el programa se van haciendo, una atrás de otra, todas las operacion
 
 Está organizado con la siguiente estructura
 
+```
 tp3-sqlmodel/
 ├── project/
 │   ├── __init__.py
-│   ├── models.py      -> las clases Oficina y Persona
-│   ├── database.py    -> el engine y la creación de las tablas
-│   └── app.py         -> las operaciones y el punto de entrada
+│   ├── models.py      # las clases Oficina y Persona
+│   ├── database.py    # el engine y la creación de las tablas
+│   └── app.py         # las operaciones y el punto de entrada
 ├── .gitignore
 ├── requirements.txt
 └── README.md
-
+```
 
 Para correrlo
 
